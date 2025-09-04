@@ -168,8 +168,8 @@ const ComparisonTables: React.FC<ComparisonTablesProps> = ({
               {currentRange && (
                 <div className="mt-2 text-sm">
                   <span className="text-gray-500">Compa-Ratio:</span>
-                  <span className={`font-semibold ml-1 ${getPositionColor(parseFloat(calculateCompaRatio(promotionProposal.basePay, promotionRange.midSalary)))}`}>
-                    {calculateCompaRatio(promotionProposal.basePay, promotionRange.midSalary)}%
+                  <span className={`font-semibold ml-1 ${getPositionColor(parseFloat(calculateCompaRatio(employee.currentSalary, currentRange.midSalary)))}`}>
+                    {calculateCompaRatio(employee.currentSalary, currentRange.midSalary)}%
                   </span>
                 </div>
               )}
@@ -329,7 +329,7 @@ const ComparisonTables: React.FC<ComparisonTablesProps> = ({
                   <td className="py-3 px-4 text-right">${formatUSD(competingOffer.ctc)}</td>
                   <td className="py-3 px-4 text-right">${formatUSD(promotionProposal.ctc)}</td>
                 </tr>
-                {currentRange && (
+                {currentRange && promotionProposal && promotionRange && (
                   <tr className="border-b border-gray-100">
                     <td className="py-3 px-4 font-medium">Compa-Ratio (Promotion Range)</td>
                     <td className="py-3 px-4 text-right">
@@ -338,13 +338,13 @@ const ComparisonTables: React.FC<ComparisonTablesProps> = ({
                       </span>
                     </td>
                     <td className="py-3 px-4 text-right">
-                      <span className={getPositionColor(parseFloat(calculateCompaRatio(competingOffer.basePay, promotionRange?.midSalary || currentRange.midSalary)))}>
-                        {calculateCompaRatio(competingOffer.basePay, promotionRange?.midSalary || currentRange.midSalary)}%
+                      <span className={getPositionColor(parseFloat(calculateCompaRatio(competingOffer.basePay, promotionRange.midSalary)))}>
+                        {calculateCompaRatio(competingOffer.basePay, promotionRange.midSalary)}%
                       </span>
                     </td>
                     <td className="py-3 px-4 text-right">
-                      <span className={getPositionColor(parseFloat(calculateCompaRatio(promotionProposal.basePay, promotionRange?.midSalary || currentRange.midSalary)))}>
-                        {calculateCompaRatio(promotionProposal.basePay, promotionRange?.midSalary || currentRange.midSalary)}%
+                      <span className={getPositionColor(parseFloat(calculateCompaRatio(promotionProposal.basePay, promotionRange.midSalary)))}>
+                        {calculateCompaRatio(promotionProposal.basePay, promotionRange.midSalary)}%
                       </span>
                     </td>
                   </tr>
