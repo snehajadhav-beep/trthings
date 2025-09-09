@@ -134,7 +134,6 @@ function App() {
             <>
               {/* Job Title Selector */}
               <JobTitleSelector
-                employee={selectedEmployee}
                 ranges={mockCompensationRanges}
                 selectedRange={selectedRange}
                 onSelectRange={setSelectedRange}
