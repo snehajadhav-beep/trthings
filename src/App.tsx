@@ -5,6 +5,7 @@ import JobTitleSelector from './components/JobTitleSelector';
 import CompetingOfferInput from './components/CompetingOfferInput';
 import CounterProposalBuilder from './components/CounterProposalBuilder';
 import ComparisonTables from './components/ComparisonTables';
+import ChartsAndVisuals from './components/ChartsAndVisuals';
 import { mockEmployees, mockCompensationRanges } from './data/mockData';
 
 interface Employee {
@@ -162,6 +163,18 @@ function App() {
                   promotionRange={promotionRange}
                   counterProposal={counterProposal}
                   currentRange={selectedRange}
+                  exchangeRate={exchangeRate}
+                />
+              )}
+
+              {/* Charts and Visual Analytics */}
+              {(competingOffer.ctc > 0 || competingOffer.basePay > 0) && counterProposal && (
+                <ChartsAndVisuals
+                  employee={selectedEmployee}
+                  competingOffer={competingOffer}
+                  counterProposal={counterProposal}
+                  currentRange={selectedRange}
+                  promotionRange={promotionRange}
                   exchangeRate={exchangeRate}
                 />
               )}
