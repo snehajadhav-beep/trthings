@@ -7,18 +7,11 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  LineChart,
-  Line,
-  PieChart,
-  Pie,
-  Cell,
   RadialBarChart,
   RadialBar,
-  Legend,
-  Area,
   AreaChart
 } from 'recharts';
-import { TrendingUp, BarChart3, PieChart as PieChartIcon, Target, DollarSign, Users, Award, AlertTriangle } from 'lucide-react';
+import { TrendingUp, BarChart3, Target, DollarSign, Users, AlertTriangle, Award } from 'lucide-react';
 
 interface Employee {
   id: string;
@@ -200,7 +193,7 @@ const ChartsAndVisuals: React.FC<ChartsAndVisualsProps> = ({
     <div className="bg-white rounded-lg shadow-md p-6 mb-6">
       <div className="flex items-center space-x-2 mb-6">
         <BarChart3 className="h-6 w-6 text-blue-500" />
-        <h2 className="text-2xl font-bold text-gray-800">Charts & Visual Analytics</h2>
+        <h2 className="text-2xl font-bold text-gray-800">Retention Analysis Dashboard</h2>
       </div>
 
       {/* Key Metrics Cards */}
@@ -208,128 +201,218 @@ const ChartsAndVisuals: React.FC<ChartsAndVisualsProps> = ({
         <div className="p-4 bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-lg">
           <div className="flex items-center space-x-2 mb-2">
             <TrendingUp className="h-5 w-5 text-blue-600" />
-            <span className="text-sm font-medium text-blue-800">Retention Success</span>
+            <span className="text-sm font-medium text-blue-800">Retention Confidence</span>
           </div>
           <div className="text-2xl font-bold text-blue-900">{counterProposal.confidence}%</div>
-          <div className="text-xs text-blue-700">Confidence Level</div>
+          <div className="text-xs text-blue-700">AI Prediction Success Rate</div>
         </div>
 
         <div className="p-4 bg-gradient-to-r from-green-50 to-green-100 border border-green-200 rounded-lg">
           <div className="flex items-center space-x-2 mb-2">
             <DollarSign className="h-5 w-5 text-green-600" />
-            <span className="text-sm font-medium text-green-800">Cost Impact</span>
+            <span className="text-sm font-medium text-green-800">Investment Difference</span>
           </div>
           <div className="text-2xl font-bold text-green-900">
             {costDifference >= 0 ? '+' : ''}₹{(costDifference / 100000).toFixed(1)}L
           </div>
-          <div className="text-xs text-green-700">vs Competing Offer</div>
+          <div className="text-xs text-green-700">Counter vs External Offer</div>
         </div>
 
         <div className="p-4 bg-gradient-to-r from-purple-50 to-purple-100 border border-purple-200 rounded-lg">
           <div className="flex items-center space-x-2 mb-2">
             <Target className="h-5 w-5 text-purple-600" />
-            <span className="text-sm font-medium text-purple-800">Market Position</span>
+            <span className="text-sm font-medium text-purple-800">Market Positioning</span>
           </div>
           <div className="text-2xl font-bold text-purple-900">{counterProposal.compaRatio.toFixed(0)}%</div>
-          <div className="text-xs text-purple-700">Compa-Ratio</div>
+          <div className="text-xs text-purple-700">vs Market Midpoint</div>
         </div>
 
         <div className="p-4 bg-gradient-to-r from-orange-50 to-orange-100 border border-orange-200 rounded-lg">
           <div className="flex items-center space-x-2 mb-2">
-            <Users className="h-5 w-5 text-orange-600" />
-            <span className="text-sm font-medium text-orange-800">Service Years</span>
+            <Award className="h-5 w-5 text-orange-600" />
+            <span className="text-sm font-medium text-orange-800">Tenure Value</span>
           </div>
           <div className="text-2xl font-bold text-orange-900">{yearsOfService}</div>
-          <div className="text-xs text-orange-700">Years with Company</div>
+          <div className="text-xs text-orange-700">Years of Experience</div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Compensation Comparison Chart */}
         <div className="p-4 border border-gray-200 rounded-lg">
           <div className="flex items-center space-x-2 mb-4">
             <BarChart3 className="h-5 w-5 text-blue-500" />
-            <h3 className="text-lg font-semibold text-gray-800">Compensation Comparison</h3>
+            <h3 className="text-lg font-semibold text-gray-800">Total Compensation Analysis</h3>
+          </div>
+          <div className="text-sm text-gray-600 mb-3">
+            Compare current salary with external offer and recommended counter proposal
           </div>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={compensationComparisonData}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
+              <XAxis 
+                dataKey="name" 
+                tick={{ fontSize: 12 }}
+              />
               <YAxis label={{ value: 'Amount (Lakhs)', angle: -90, position: 'insideLeft' }} />
-              <Tooltip formatter={(value: number) => [`₹${value.toFixed(1)}L`, '']} />
+              <Tooltip 
+                formatter={(value: number, name: string) => [`₹${value.toFixed(1)}L`, name]} 
+                labelFormatter={(label) => `${label} Package`}
+              />
               <Bar dataKey="basePay" stackId="a" fill="#3b82f6" name="Base Pay" />
               <Bar dataKey="variablePay" stackId="a" fill="#10b981" name="Variable Pay" />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        {/* Compa-Ratio Analysis */}
+        {/* Market Positioning Analysis */}
         <div className="p-4 border border-gray-200 rounded-lg">
           <div className="flex items-center space-x-2 mb-4">
             <Target className="h-5 w-5 text-purple-500" />
-            <h3 className="text-lg font-semibold text-gray-800">Compa-Ratio Analysis</h3>
+            <h3 className="text-lg font-semibold text-gray-800">Market Position Tracking</h3>
+          </div>
+          <div className="text-sm text-gray-600 mb-3">
+            Track positioning relative to market midpoint (100% = market competitive)
           </div>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={compensationComparisonData}>
+            <AreaChart data={compensationComparisonData}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
+              <XAxis 
+                dataKey="name" 
+                tick={{ fontSize: 12 }}
+              />
               <YAxis label={{ value: 'Compa-Ratio (%)', angle: -90, position: 'insideLeft' }} />
-              <Tooltip formatter={(value: number) => [`${value.toFixed(1)}%`, 'Compa-Ratio']} />
-              <Line 
+              <Tooltip 
+                formatter={(value: number) => [`${value.toFixed(1)}%`, 'Market Position']} 
+                labelFormatter={(label) => `${label} Positioning`}
+              />
+              <Area 
                 type="monotone" 
                 dataKey="compaRatio" 
                 stroke="#8b5cf6" 
-                strokeWidth={3}
-                dot={{ fill: '#8b5cf6', strokeWidth: 2, r: 6 }}
+                fill="#8b5cf6" 
+                fillOpacity={0.3}
+                strokeWidth={2}
               />
-              <Line 
-                type="monotone" 
-                dataKey={() => 100} 
-                stroke="#ef4444" 
-                strokeDasharray="5 5" 
-                name="Market Midpoint"
-              />
-            </LineChart>
+            </AreaChart>
           </ResponsiveContainer>
+          <div className="mt-2 text-xs text-gray-500 text-center">
+            Market Competitive Range: 90-110% • Current Position: {counterProposal.marketPosition}
+          </div>
         </div>
+      </div>
 
-        {/* Range Analysis */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Salary Range Comparison */}
         <div className="p-4 border border-gray-200 rounded-lg">
           <div className="flex items-center space-x-2 mb-4">
-            <Award className="h-5 w-5 text-green-500" />
-            <h3 className="text-lg font-semibold text-gray-800">Salary Range Analysis</h3>
+            <Users className="h-5 w-5 text-green-500" />
+            <h3 className="text-lg font-semibold text-gray-800">Career Progression Ranges</h3>
+          </div>
+          <div className="text-sm text-gray-600 mb-3">
+            Compare current level salary ranges with promotion opportunities
           </div>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={rangeAnalysisData}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
+              <XAxis 
+                dataKey="name" 
+                tick={{ fontSize: 12 }}
+              />
               <YAxis label={{ value: 'Amount (Lakhs)', angle: -90, position: 'insideLeft' }} />
-              <Tooltip formatter={(value: number) => [`₹${value.toFixed(1)}L`, '']} />
+              <Tooltip 
+                formatter={(value: number, name: string) => [`₹${value.toFixed(1)}L`, name]} 
+                labelFormatter={(label) => `${label} Range`}
+              />
               <Bar dataKey="current" fill="#3b82f6" name="Current Level" />
               {promotionRange && <Bar dataKey="promotion" fill="#10b981" name="Promotion Level" />}
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        {/* Increment Analysis */}
+        {/* Risk Assessment Gauge */}
         <div className="p-4 border border-gray-200 rounded-lg">
           <div className="flex items-center space-x-2 mb-4">
-            <TrendingUp className="h-5 w-5 text-orange-500" />
-            <h3 className="text-lg font-semibold text-gray-800">Increment Analysis</h3>
+            <AlertTriangle className="h-5 w-5 text-red-500" />
+            <h3 className="text-lg font-semibold text-gray-800">Retention Risk Assessment</h3>
+          </div>
+          <div className="text-sm text-gray-600 mb-3">
+            AI-powered analysis of retention probability and business risk
           </div>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={incrementAnalysisData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="category" />
-              <YAxis label={{ value: 'Increase (%)', angle: -90, position: 'insideLeft' }} />
-              <Tooltip formatter={(value: number) => [`${value.toFixed(1)}%`, '']} />
-              <Bar dataKey="competing" fill="#f59e0b" name="Competing Offer" />
-              <Bar dataKey="counter" fill="#10b981" name="Counter Proposal" />
-            </BarChart>
+            <RadialBarChart cx="50%" cy="50%" innerRadius="60%" outerRadius="90%" data={riskAnalysisData}>
+              <RadialBar
+                dataKey="confidence"
+                cornerRadius={10}
+                fill={getRiskColor(counterProposal.riskLevel)}
+              />
+              <text x="50%" y="45%" textAnchor="middle" dominantBaseline="middle" className="text-3xl font-bold">
+                {counterProposal.confidence}%
+              </text>
+              <text x="50%" y="55%" textAnchor="middle" dominantBaseline="middle" className="text-sm text-gray-600">
+                Success Rate
+              </text>
+            </RadialBarChart>
           </ResponsiveContainer>
+          <div className="text-center mt-2">
+            <span className={`inline-block px-4 py-2 rounded-full text-sm font-medium`} 
+                  style={{ backgroundColor: getRiskColor(counterProposal.riskLevel) + '20', color: getRiskColor(counterProposal.riskLevel) }}>
+              {counterProposal.riskLevel.toUpperCase()} RETENTION RISK
+            </span>
+          </div>
         </div>
+      </div>
 
-        {/* Risk Assessment Gauge */}
+      {/* Executive Summary */}
+      <div className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg">
+        <h3 className="text-xl font-semibold text-blue-900 mb-4 flex items-center">
+          <TrendingUp className="h-6 w-6 mr-2" />
+          Executive Summary & Recommendations
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white p-4 rounded-lg border border-blue-200">
+            <div className="font-semibold text-blue-800 mb-2 flex items-center">
+              <DollarSign className="h-5 w-5 mr-2" />
+              Financial Impact
+            </div>
+            <ul className="space-y-1 text-sm text-gray-700">
+              <li>• Counter proposal: <span className="font-semibold text-green-600">+{currentIncrease.toFixed(1)}%</span> increase</li>
+              <li>• External offer: <span className="font-semibold text-orange-600">+{competingIncrease.toFixed(1)}%</span> increase</li>
+              <li>• Investment difference: <span className="font-semibold">₹{Math.abs(costDifference / 100000).toFixed(1)}L</span></li>
+            </ul>
+          </div>
+          
+          <div className="bg-white p-4 rounded-lg border border-blue-200">
+            <div className="font-semibold text-blue-800 mb-2 flex items-center">
+              <Target className="h-5 w-5 mr-2" />
+              Market Positioning
+            </div>
+            <ul className="space-y-1 text-sm text-gray-700">
+              <li>• New compa-ratio: <span className="font-semibold">{counterProposal.compaRatio.toFixed(1)}%</span></li>
+              <li>• Market position: <span className="font-semibold">{counterProposal.marketPosition}</span></li>
+              <li>• Tenure value: <span className="font-semibold">{yearsOfService} years</span> experience</li>
+            </ul>
+          </div>
+          
+          <div className="bg-white p-4 rounded-lg border border-blue-200">
+            <div className="font-semibold text-blue-800 mb-2 flex items-center">
+              <AlertTriangle className="h-5 w-5 mr-2" />
+              Risk Assessment
+            </div>
+            <ul className="space-y-1 text-sm text-gray-700">
+              <li>• Retention confidence: <span className="font-semibold text-green-600">{counterProposal.confidence}%</span></li>
+              <li>• Business risk: <span className={`font-semibold ${counterProposal.riskLevel === 'low' ? 'text-green-600' : counterProposal.riskLevel === 'medium' ? 'text-yellow-600' : 'text-red-600'}`}>{counterProposal.riskLevel.toUpperCase()}</span></li>
+              <li>• Replacement cost: <span className="font-semibold">3-5x higher</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ChartsAndVisuals;
         <div className="p-4 border border-gray-200 rounded-lg">
           <div className="flex items-center space-x-2 mb-4">
             <AlertTriangle className="h-5 w-5 text-red-500" />
